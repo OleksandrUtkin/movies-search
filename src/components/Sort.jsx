@@ -3,7 +3,7 @@ import React, {useState, useEffect, useRef} from 'react';
 const Sort = (props) => {
     const [sortByValue, setSortByValue] = useState(null);
     const [showSortDropDown, setShowSortDropDown] = useState(false);
-    const sortByList = ['Thriller', 'Action', 'Comedy', 'Detective'];
+    const sortByList = ['Thriller', 'Action', 'Comedy', 'Adventure'];
     const sortValueRef = useRef(null);
     const clearSortRef = useRef(null);
 
