@@ -45,24 +45,26 @@ const Sort = (props) => {
 
 
     return (
-        <div className='sort'>
-            <div className='sort__value' ref={sortValueRef}>
-                <span>{sortByValue ? sortByValue : 'Sort by'}</span>
-                {sortByValue &&
-                <div className="sort__clear" ref={clearSortRef}>
-                    <div></div>
-                    <div></div>
-                </div>}
+        <div className="sort-wrap">
+            <div className='sort'>
+                <div className='sort__value' ref={sortValueRef}>
+                    <span>{sortByValue ? sortByValue : 'Sort by'}</span>
+                    {sortByValue &&
+                    <div className="sort__clear" ref={clearSortRef}>
+                        <div></div>
+                        <div></div>
+                    </div>}
+                </div>
+                {showSortDropDown && <ul className='sort__dropdown'>
+                    {sortByList.map((genre, index) =>
+                        <li
+                            key={genre + index}
+                            onClick={() => onSortByItemClick(genre)}>
+                            {genre}
+                        </li>
+                    )}
+                </ul>}
             </div>
-            {showSortDropDown && <ul className='sort__dropdown'>
-                {sortByList.map((genre, index) =>
-                    <li
-                        key={genre + index}
-                        onClick={() => onSortByItemClick(genre)}>
-                        {genre}
-                    </li>
-                )}
-            </ul>}
         </div>
     );
 };

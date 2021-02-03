@@ -1,0 +1,3 @@
+const movieAPIkey = '482937fab99813d247db7ea317c5217e';
+export const APIReadAccessTokenV4Auth = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ODI5MzdmYWI5OTgxM2QyNDdkYjdlYTMxN2M1MjE3ZSIsInN1YiI6IjYwMTlkYzJhZTk0MmVlMDA0MmY1M2EwMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TKKo_MwMYBUNOjmDPudcBXBjwmR3XvvM3dEUznfeOSI';
+export default movieAPIkey;
