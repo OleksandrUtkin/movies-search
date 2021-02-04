@@ -1,12 +1,13 @@
 import React from 'react';
 
-const Movies = ({movies}) => {
+const Movies = ({movies, genresList}) => {
     const prePathPoster = 'http://image.tmdb.org/t/p/w92';
 
-    if(!movies) return <p>Loading...</p>;
     return (
         <ul className='movies-ul'>
-            {movies.filter((movie) => movie.title && movie.poster_path && movie.release_date).map((movie, index) => {
+            {movies.filter((movie) => movie.title && movie.poster_path && movie.release_date && movie.genre_ids.length)
+                .slice(0, 10)
+                .map((movie, index) => {
                 return (
                     <li key={movie.title+index} className='movie'>
                         <div className="movie__poster-wrap">
@@ -15,7 +16,11 @@ const Movies = ({movies}) => {
                         <div className="movie__description">
                             <h3 className='movie__title'>{movie.title}</h3>
                             <p className='movie__year'>{movie.release_date}</p>
-                            <div className="movie__genres"></div>
+                            <ul className="movie__genres">
+                                {genresList.filter(genre => movie.genre_ids.includes(genre.id)).map(genre =>
+                                    <li key={genre.name}>{genre.name}</li>
+                                )}
+                            </ul>
                         </div>
                     </li>
                 )

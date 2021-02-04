@@ -1,25 +1,30 @@
 import React, {useState, useEffect, useRef} from 'react';
 
-const Sort = (props) => {
-    const [sortByValue, setSortByValue] = useState(null);
+const Filter = ({genresList, setGenreFilterId, setCurrentPage}) => {
+    const filterByList = ['Thriller', 'Action', 'Comedy', 'Adventure'];
+    const [filterByValue, setFilterByValue] = useState(null);
     const [showSortDropDown, setShowSortDropDown] = useState(false);
-    const sortByList = ['Thriller', 'Action', 'Comedy', 'Adventure'];
-    const sortValueRef = useRef(null);
+
+    const filterValueRef = useRef(null);
     const clearSortRef = useRef(null);
 
     const onSortByItemClick = (genre) => {
-        setSortByValue(genre);
+        setCurrentPage(1);
+        setFilterByValue(genre);
         setShowSortDropDown(false);
+        setGenreFilterId(genresList.filter(genreObj => genreObj.name === genre)[0].id);
     };
 
-    // open sort dropdown && clear sort
+    // open filter dropdown && clear sort
     useEffect(() => {
         const showSortDropDownFunc = (event) => {
             setShowSortDropDown(!showSortDropDown);
         };
 
         const clearSort = () => {
-            setSortByValue(null);
+            setCurrentPage(1);
+            setFilterByValue(null);
+            setGenreFilterId(false);
         };
 
         const clickOnSortValue = (event) => {
@@ -30,13 +35,12 @@ const Sort = (props) => {
         sortValueContainer && sortValueContainer.addEventListener('click', clickOnSortValue);
 
         return () => sortValueContainer && sortValueContainer.removeEventListener("click", clickOnSortValue);
-    }, [sortByValue, showSortDropDown]);
+    }, [filterByValue, showSortDropDown]);
 
-
-    // hide dropdown on outside click
+    // hide filter dropdown on outside click
     useEffect(() => {
         const handleClickOutside = (event) => {
-            !sortValueRef.current.contains(event.target) && showSortDropDown && setShowSortDropDown(false);
+            !filterValueRef.current.contains(event.target) && showSortDropDown && setShowSortDropDown(false);
         };
 
         document.addEventListener("click", handleClickOutside);
@@ -47,16 +51,17 @@ const Sort = (props) => {
     return (
         <div className="sort-wrap">
             <div className='sort'>
-                <div className='sort__value' ref={sortValueRef}>
-                    <span>{sortByValue ? sortByValue : 'Sort by'}</span>
-                    {sortByValue &&
-                    <div className="sort__clear" ref={clearSortRef}>
-                        <div></div>
-                        <div></div>
-                    </div>}
+                <div className='sort__value' ref={filterValueRef}>
+                    <span>{filterByValue ? filterByValue : 'Genres'}</span>
+                    {filterByValue &&
+                        <div className="sort__clear" ref={clearSortRef}>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    }
                 </div>
                 {showSortDropDown && <ul className='sort__dropdown'>
-                    {sortByList.map((genre, index) =>
+                    {filterByList.map((genre, index) =>
                         <li
                             key={genre + index}
                             onClick={() => onSortByItemClick(genre)}>
@@ -69,4 +74,4 @@ const Sort = (props) => {
     );
 };
 
-export default Sort;
+export default Filter;

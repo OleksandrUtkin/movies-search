@@ -1,35 +1,53 @@
 import React, {useEffect, useState} from 'react';
-import Sort from "./components/Sort";
+import Filter from "./components/Filter";
 import Movies from "./components/Movies";
 import axios from "axios";
 import movieAPIkey from './movieConfig';
+import Pagination from "./components/Pagination";
 
 function App() {
-
-    const [sortMovieBy, setSortMovieBy] = useState('primary_release_date.desc');
-    const [responsePage, setResponsePage] = useState(1);
+    const [genreFilterId, setGenreFilterId] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
     const [genresList, setGenresList] = useState([]);
     const [movies, setMovies] = useState([]);
+    const [moviesPagesValue, setMoviesPagesValue] = useState(null);
+    const moviesPages = [];
+
+    for (let i = 1; i <= moviesPagesValue; i++) moviesPages.push(i);
 
     useEffect(() => {
         axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${movieAPIkey}&language=en-US`)
             .then(response => setGenresList(response.data.genres));
     }, []);
 
-    console.log(genresList);
-
     useEffect(() => {
-       axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${movieAPIkey}&language=en-US&sort_by=${sortMovieBy}&page=${responsePage}`)
-           .then((response) => setMovies(response.data.results))
-           // .then(() => console.log(movies))
-    }, [responsePage]);
+        console.log(currentPage);
+        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${movieAPIkey}&language=en-US&sort_by=primary_release_date.desc&page=${currentPage}${genreFilterId ? `&with_genres=${genreFilterId}` : ''}`)
+           .then(response => {
+               setMovies(response.data.results);
+               setMoviesPagesValue(response.data.total_pages);
+               console.log(response)
+           })
+    }, [currentPage, genreFilterId]);
 
-    // console.log(movies);
+    if(!movies.length) return <p>Loading...</p>;
 
     return (
         <>
-            <Sort/>
-            <Movies movies={movies} />
+            <Filter
+                genresList={genresList}
+                setGenreFilterId={setGenreFilterId}
+                setCurrentPage={setCurrentPage}
+            />
+            <Movies
+                movies={movies}
+                genresList={genresList}
+            />
+            {moviesPages.length > 0 && <Pagination
+                moviesPages={moviesPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+            />}
         </>
     );
 }

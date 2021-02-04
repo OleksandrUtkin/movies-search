@@ -1,0 +1,27 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    height: 30px;
+    margin-top: 20px;
+    button {
+        border: 1px solid #8c8c8c;
+        height: 100%;
+        cursor: pointer;
+        &:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+    &__prev, &__next {
+        width: 50px;
+        &_disabled {
+            pointer-events: none;
+            opacity: 0.2;
+        }
+    }
+    &__btn {
+        width: 30px;
+        &_active {
+            background: #8c8c8c;
+        }
+    }
+}

@@ -3,14 +3,34 @@
     padding: 10px;
     border: 1px solid #282828;
     margin: 10px 0;
+    &__description {
+        display: flex;
+        flex-direction: column;
+    }
     &__poster-wrap {
-        width: 100px;
+        width: 80px;
         height: 120px;
         margin-right: 20px;
         img {
-            object-fit: cover;
-            width: 100%;
+            object-fit: contain;
             height: 100%;
+        }
+    }
+    &__year {
+        margin-top: 10px;
+    }
+    &__genres {
+        display: flex;
+        margin-top: auto;
+        li {
+            color: #8c8c8c;
+            &:not(:last-child) {
+                margin-right: 20px;
+                &:after {
+                    content: ',';
+                    position: relative;
+                }
+            }
         }
     }
 }

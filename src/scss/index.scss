@@ -2,10 +2,16 @@
   margin: 0;
   padding: 0;
   color: #dcdcdc;
+  outline: none;
 }
 
 ul {
   list-style-type: none;
+}
+
+button {
+  border: none;
+  background: transparent;
 }
 
 body {
@@ -18,5 +24,6 @@ body {
   padding: 4vw;
 }
 
-@import "./components/sort";
+@import "components/filter";
 @import "./components/movie";
+@import "./components/pagination";
