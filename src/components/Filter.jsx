@@ -35,7 +35,7 @@ const Filter = ({genresList, setGenreFilterId, setCurrentPage}) => {
         sortValueContainer && sortValueContainer.addEventListener('click', clickOnSortValue);
 
         return () => sortValueContainer && sortValueContainer.removeEventListener("click", clickOnSortValue);
-    }, [filterByValue, showSortDropDown]);
+    }, [filterByValue, showSortDropDown, setCurrentPage, setGenreFilterId]);
 
     // hide filter dropdown on outside click
     useEffect(() => {

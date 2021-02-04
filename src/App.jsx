@@ -21,12 +21,10 @@ function App() {
     }, []);
 
     useEffect(() => {
-        console.log(currentPage);
         axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${movieAPIkey}&language=en-US&sort_by=primary_release_date.desc&page=${currentPage}${genreFilterId ? `&with_genres=${genreFilterId}` : ''}`)
            .then(response => {
                setMovies(response.data.results);
                setMoviesPagesValue(response.data.total_pages);
-               console.log(response)
            })
     }, [currentPage, genreFilterId]);
 
