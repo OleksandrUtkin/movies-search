@@ -5,13 +5,13 @@ import axios from "axios";
 import movieAPIkey from './movieConfig';
 import Pagination from "./components/Pagination";
 
-function App() {
+const App: React.FC = () => {
     const [genreFilterId, setGenreFilterId] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [genresList, setGenresList] = useState([]);
     const [movies, setMovies] = useState([]);
-    const [moviesPagesValue, setMoviesPagesValue] = useState(null);
-    const moviesPages = [];
+    const [moviesPagesValue, setMoviesPagesValue] = useState(0);
+    const moviesPages : number[] = [];
 
     for (let i = 1; i <= moviesPagesValue; i++) moviesPages.push(i);
 
@@ -48,6 +48,6 @@ function App() {
             />}
         </>
     );
-}
+};
 
 export default App;
