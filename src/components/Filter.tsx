@@ -4,9 +4,8 @@ const Filter = ({genresList, setGenreFilterId, setCurrentPage}) => {
     const filterByList = ['Thriller', 'Action', 'Comedy', 'Adventure'];
     const [filterByValue, setFilterByValue] = useState(null);
     const [showSortDropDown, setShowSortDropDown] = useState(false);
-
-    const filterValueRef = useRef(null);
-    const clearSortRef = useRef(null);
+    const filterValueRef = useRef<HTMLDivElement>(null);
+    const clearSortRef = useRef<HTMLDivElement>(null);
 
     const onSortByItemClick = (genre) => {
         setCurrentPage(1);
@@ -15,32 +14,23 @@ const Filter = ({genresList, setGenreFilterId, setCurrentPage}) => {
         setGenreFilterId(genresList.filter(genreObj => genreObj.name === genre)[0].id);
     };
 
-    // open filter dropdown && clear sort
-    useEffect(() => {
-        const showSortDropDownFunc = (event) => {
-            setShowSortDropDown(!showSortDropDown);
-        };
+    const showSortDropDownFunc = () => {
+        setShowSortDropDown(!showSortDropDown);
+    };
 
-        const clearSort = () => {
-            setCurrentPage(1);
-            setFilterByValue(null);
-            setGenreFilterId(false);
-        };
+    const clearSort = () => {
+        setCurrentPage(1);
+        setFilterByValue(null);
+        setGenreFilterId(false);
+    };
 
-        const clickOnSortValue = (event) => {
-            clearSortRef.current && clearSortRef.current.contains(event.target) ? clearSort() : showSortDropDownFunc();
-        };
-
-        const sortValueContainer = document.querySelector('.sort__value');
-        sortValueContainer && sortValueContainer.addEventListener('click', clickOnSortValue);
-
-        return () => sortValueContainer && sortValueContainer.removeEventListener("click", clickOnSortValue);
-    }, [filterByValue, showSortDropDown, setCurrentPage, setGenreFilterId]);
-
-    // hide filter dropdown on outside click
+    const clickOnSortValue = (event) => {
+        clearSortRef.current && clearSortRef.current.contains(event.target) ? clearSort() : showSortDropDownFunc();
+    };
+    
     useEffect(() => {
         const handleClickOutside = (event) => {
-            !filterValueRef.current.contains(event.target) && showSortDropDown && setShowSortDropDown(false);
+            if (filterValueRef.current) !filterValueRef.current.contains(event.target) && showSortDropDown && setShowSortDropDown(false);
         };
 
         document.addEventListener("click", handleClickOutside);
@@ -51,7 +41,7 @@ const Filter = ({genresList, setGenreFilterId, setCurrentPage}) => {
     return (
         <div className="sort-wrap">
             <div className='sort'>
-                <div className='sort__value' ref={filterValueRef}>
+                <div className='sort__value' ref={filterValueRef} onClick={clickOnSortValue}>
                     <span>{filterByValue ? filterByValue : 'Genres'}</span>
                     {filterByValue &&
                         <div className="sort__clear" ref={clearSortRef}>

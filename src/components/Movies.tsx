@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Movies = ({movies, genresList}) => {
+interface PropsTypes {
+    movies: Array<any>
+    genresList: { id: number, name: string }[]
+}
+
+const Movies : React.FC<PropsTypes> = ({movies, genresList}) => {
     const prePathPoster = 'http://image.tmdb.org/t/p/w92';
 
     return (
