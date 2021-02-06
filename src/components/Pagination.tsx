@@ -3,7 +3,7 @@ import React from 'react';
 interface PropsTypes {
     moviesPages: number[]
     currentPage:  number
-    setCurrentPage: (n : number) => void
+    setCurrentPage: (page : number) => void
 }
 
 const Pagination: React.FC<PropsTypes> = ({moviesPages, currentPage, setCurrentPage}) => {

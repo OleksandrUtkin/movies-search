@@ -1,13 +1,19 @@
 import React, {useState, useEffect, useRef} from 'react';
 
-const Filter = ({genresList, setGenreFilterId, setCurrentPage}) => {
+interface propsTypes {
+    genresList: { id: number, name: string }[]
+    setGenreFilterId: (id: number | false) => void
+    setCurrentPage: (page: number) => void
+}
+
+const Filter: React.FC<propsTypes> = ({genresList, setGenreFilterId, setCurrentPage}) => {
     const filterByList = ['Thriller', 'Action', 'Comedy', 'Adventure'];
-    const [filterByValue, setFilterByValue] = useState(null);
+    const [filterByValue, setFilterByValue] = useState<boolean | string>(false);
     const [showSortDropDown, setShowSortDropDown] = useState(false);
     const filterValueRef = useRef<HTMLDivElement>(null);
     const clearSortRef = useRef<HTMLDivElement>(null);
 
-    const onSortByItemClick = (genre) => {
+    const onSortByItemClick = (genre: string | false) => {
         setCurrentPage(1);
         setFilterByValue(genre);
         setShowSortDropDown(false);
@@ -20,17 +26,17 @@ const Filter = ({genresList, setGenreFilterId, setCurrentPage}) => {
 
     const clearSort = () => {
         setCurrentPage(1);
-        setFilterByValue(null);
+        setFilterByValue(false);
         setGenreFilterId(false);
     };
 
-    const clickOnSortValue = (event) => {
-        clearSortRef.current && clearSortRef.current.contains(event.target) ? clearSort() : showSortDropDownFunc();
+    const clickOnSortValue = (event : React.SyntheticEvent<HTMLDivElement>) => {
+        clearSortRef.current && clearSortRef.current.contains(event.target as Node) ? clearSort() : showSortDropDownFunc();
     };
     
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (filterValueRef.current) !filterValueRef.current.contains(event.target) && showSortDropDown && setShowSortDropDown(false);
+        const handleClickOutside = (event: MouseEvent) => {
+            if (filterValueRef.current) !filterValueRef.current.contains(event.target as Node) && showSortDropDown && setShowSortDropDown(false);
         };
 
         document.addEventListener("click", handleClickOutside);

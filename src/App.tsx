@@ -6,14 +6,14 @@ import movieAPIkey from './movieConfig';
 import Pagination from "./components/Pagination";
 
 const App: React.FC = () => {
-    const [genreFilterId, setGenreFilterId] = useState(false);
+    const [genreFilterId, setGenreFilterId] = useState<number | false>(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [genresList, setGenresList] = useState([]);
     const [movies, setMovies] = useState([]);
     const [moviesPagesValue, setMoviesPagesValue] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | false>(false);
     const moviesPages : number[] = [];
-
-    for (let i = 1; i <= moviesPagesValue; i++) moviesPages.push(i);
 
     useEffect(() => {
         axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${movieAPIkey}&language=en-US`)
@@ -21,14 +21,26 @@ const App: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${movieAPIkey}&language=en-US&sort_by=primary_release_date.desc&page=${currentPage}${genreFilterId ? `&with_genres=${genreFilterId}` : ''}`)
-           .then(response => {
-               setMovies(response.data.results);
-               setMoviesPagesValue(response.data.total_pages);
-           })
+        const getData = async () => {
+            setError(false);
+            setIsLoading(true);
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${movieAPIkey}&language=en-US&sort_by=primary_release_date.desc&page=${currentPage}${genreFilterId ? `&with_genres=${genreFilterId}` : ''}`);
+                setMovies(response.data.results);
+                setMoviesPagesValue(response.data.total_pages);
+            } catch (error) {
+                setError(error.message);
+            }
+            setIsLoading(false);
+        };
+        getData();
     }, [currentPage, genreFilterId]);
 
-    if(!movies.length) return <p>Loading...</p>;
+    for (let i = 1; i <= moviesPagesValue; i++) moviesPages.push(i);
+
+    if(isLoading) return <p>Loading...</p>;
+    if(error) return <p>{error}</p>;
+    if(!movies.length) return <p>No movies found</p>;
 
     return (
         <>
@@ -41,11 +53,13 @@ const App: React.FC = () => {
                 movies={movies}
                 genresList={genresList}
             />
-            {moviesPages.length > 0 && <Pagination
-                moviesPages={moviesPages}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-            />}
+            {moviesPages.length > 1 &&
+                <Pagination
+                    moviesPages={moviesPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
+            }
         </>
     );
 };
