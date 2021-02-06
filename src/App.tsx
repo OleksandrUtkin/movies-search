@@ -27,11 +27,12 @@ const App: React.FC = () => {
     const getData = async () => {
       setError(false);
       setIsLoading(true);
+      const genreFilterIdValue = genreFilterId
+        ? `&with_genres=${genreFilterId}`
+        : "";
       try {
         const response = await axios.get(
-          `https://api.themoviedb.org/3/discover/movie?api_key=${movieAPIkey}&language=en-US&sort_by=primary_release_date.desc&page=${currentPage}${
-            genreFilterId ? `&with_genres=${genreFilterId}` : ""
-          }`
+          `https://api.themoviedb.org/3/discover/movie?api_key=${movieAPIkey}&language=en-US&sort_by=primary_release_date.desc&page=${currentPage}${genreFilterIdValue}`
         );
         setMovies(response.data.results);
         setMoviesPagesValue(response.data.total_pages);
