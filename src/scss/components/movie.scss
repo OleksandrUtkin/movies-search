@@ -1,36 +1,36 @@
 .movie {
+  display: flex;
+  padding: 10px;
+  border: 1px solid #282828;
+  margin: 10px 0;
+  &__description {
     display: flex;
-    padding: 10px;
-    border: 1px solid #282828;
-    margin: 10px 0;
-    &__description {
-        display: flex;
-        flex-direction: column;
+    flex-direction: column;
+  }
+  &__poster-wrap {
+    width: 80px;
+    height: 120px;
+    margin-right: 20px;
+    img {
+      object-fit: contain;
+      height: 100%;
     }
-    &__poster-wrap {
-        width: 80px;
-        height: 120px;
+  }
+  &__year {
+    margin-top: 10px;
+  }
+  &__genres {
+    display: flex;
+    margin-top: auto;
+    li {
+      color: #8c8c8c;
+      &:not(:last-child) {
         margin-right: 20px;
-        img {
-            object-fit: contain;
-            height: 100%;
+        &:after {
+          content: ",";
+          position: relative;
         }
+      }
     }
-    &__year {
-        margin-top: 10px;
-    }
-    &__genres {
-        display: flex;
-        margin-top: auto;
-        li {
-            color: #8c8c8c;
-            &:not(:last-child) {
-                margin-right: 20px;
-                &:after {
-                    content: ',';
-                    position: relative;
-                }
-            }
-        }
-    }
+  }
 }
