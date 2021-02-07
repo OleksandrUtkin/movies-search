@@ -8,6 +8,8 @@ interface PropsTypes {
 const Movies: React.FC<PropsTypes> = ({ movies, genresList }) => {
   const prePathPoster = "http://image.tmdb.org/t/p/w92";
 
+  if (!movies.length) return <p>No movies found</p>
+
   return (
     <ul className="movies-ul">
       {movies

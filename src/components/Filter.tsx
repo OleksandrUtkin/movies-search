@@ -6,11 +6,7 @@ interface propsTypes {
   setCurrentPage: (page: number) => void;
 }
 
-const Filter: React.FC<propsTypes> = ({
-  genresList,
-  setGenreFilterId,
-  setCurrentPage,
-}) => {
+const Filter: React.FC<propsTypes> = ({genresList, setGenreFilterId, setCurrentPage}) => {
   const filterByList = ["Thriller", "Action", "Comedy", "Adventure"];
   const [filterByValue, setFilterByValue] = useState<boolean | string>(false);
   const [showSortDropDown, setShowSortDropDown] = useState(false);

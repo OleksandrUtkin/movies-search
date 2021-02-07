@@ -6,11 +6,7 @@ interface PropsTypes {
   setCurrentPage: (page: number) => void;
 }
 
-const Pagination: React.FC<PropsTypes> = ({
-  moviesPages,
-  currentPage,
-  setCurrentPage,
-}) => {
+const Pagination: React.FC<PropsTypes> = ({moviesPages, currentPage, setCurrentPage}) => {
   return (
     <div className="pagination">
       <button
