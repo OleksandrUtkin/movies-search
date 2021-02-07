@@ -51,23 +51,23 @@ const Filter: React.FC<propsTypes> = ({genresList, setGenreFilterId, setCurrentP
   }, [showFilterDropDown]);
 
   return (
-    <div className="sort-wrap">
-      <div className="sort">
+    <div className="filter-wrap">
+      <div className="filter">
         <div
-          className="sort__value"
+          className="filter__value"
           ref={filterValueRef}
           onClick={clickOnFilterValue}
         >
           <span>{filterByValue ? filterByValue : "Genres"}</span>
           {filterByValue && (
-            <div className="sort__clear" ref={clearSortRef}>
+            <div className="filter__clear" ref={clearSortRef}>
               <div></div>
               <div></div>
             </div>
           )}
         </div>
         {showFilterDropDown && (
-          <ul className="sort__dropdown">
+          <ul className="filter__dropdown">
             {filterByList.map((genre, index) => (
               <li key={genre + index} onClick={() => onFilterByItemClick(genre)}>
                 {genre}
